@@ -1,3 +1,4 @@
+
 package port.sm.erp.entity;
 
 import lombok.Getter;
@@ -37,7 +38,7 @@ public class JournalLine {
     //금액 전표라인의 금액 정수기반(원단위) 소수점 오류 방지
     private Long amount;
 
-    /*적요*/
+    /**적요*/
     private String lineRemark;
 
     //전표와의 관계 (핵심)

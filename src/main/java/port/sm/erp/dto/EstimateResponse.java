@@ -1,16 +1,19 @@
 package port.sm.erp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import port.sm.erp.entity.Estimate;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-public class EstimateRequest {
+@AllArgsConstructor
+public class EstimateResponse {
+
+    private Long id;
     private String estimateNo;
     private LocalDate estimateDate;
     private String customerName;
     private String remark;
-    private List<EstimateLineRequest> lines;
+    private List<EstimateLineResponse> lines;
 }
