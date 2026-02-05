@@ -4,7 +4,7 @@ import javax.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "MEMBERS") // Oracleì—ì„œëŠ” MEMBERë³´ë‹¤ëŠ” ë³µìˆ˜í˜• ê¶Œìž¥
+@Table(name = "MEMBERS") // Oracle에서는 MEMBER보다는 복수형 권장
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,7 +12,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 public class Member {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
     @SequenceGenerator(name = "member_seq", sequenceName = "MEMBER_SEQ", allocationSize = 1)
     @Column(name = "MEMBER_ID")
@@ -40,7 +40,7 @@ public class Member {
     private String tel;
 
     @Column(name = "GENDER", nullable = false)
-    private String gender; //€
+    private String gender;
 
     @Column(name = "ADDRESS")
     private String address;
@@ -53,20 +53,20 @@ public class Member {
 
     @Column(name = "UPDATED_AT", insertable = false, updatable = false)
     private java.sql.Date updatedAt;
-    
-    //ì¶”ê°€
+
+    //추가
     @Column(name = "PROVIDER")
     private String provider;
-    
+
     @Column(name = "PROVIDER_ID")
     private String providerId;
-    
+
     @Column(name = "USERNAME")
     private String username;
-    
-    
-    
-    
+
+
+
+
 
 
 }

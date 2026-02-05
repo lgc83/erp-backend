@@ -1,4 +1,3 @@
-
 package port.sm.erp.entity;
 
 import lombok.Getter;
@@ -48,4 +47,12 @@ public class JournalLine {
 
     @JoinColumn(name = "JOURNAL_ID") //👉 외래키(FK) 컬럼
     private Journal journal;
+
+    //전표와의 관계 (핵심)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TRADE_ID", nullable = false) //👉 외래키(FK) 컬럼
+    private Trade trade;
+
+
+
 }

@@ -6,16 +6,16 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(
-    name = "INV_ITEM",
-    uniqueConstraints = {
-        @UniqueConstraint(name = "UK_INV_ITEM_CODE", columnNames = "ITEM_CODE")
-    },
-    indexes = {
-        @Index(name = "IDX_INV_ITEM_NAME", columnList = "ITEM_NAME"),
-        @Index(name = "IDX_INV_ITEM_GROUP", columnList = "ITEM_GROUP"),
-        @Index(name = "IDX_INV_ITEM_BARCODE", columnList = "BARCODE"),
-        @Index(name = "IDX_INV_ITEM_USE_YN", columnList = "USE_YN")
-    }
+        name = "INV_ITEM",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UK_INV_ITEM_CODE", columnNames = "ITEM_CODE")
+        },
+        indexes = {
+                @Index(name = "IDX_INV_ITEM_NAME", columnList = "ITEM_NAME"),
+                @Index(name = "IDX_INV_ITEM_GROUP", columnList = "ITEM_GROUP"),
+                @Index(name = "IDX_INV_ITEM_BARCODE", columnList = "BARCODE"),
+                @Index(name = "IDX_INV_ITEM_USE_YN", columnList = "USE_YN")
+        }
 )
 @Getter
 @Setter
@@ -27,9 +27,9 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_INV_ITEM")
     @SequenceGenerator(
-        name = "SEQ_INV_ITEM",
-        sequenceName = "SEQ_INV_ITEM",
-        allocationSize = 1
+            name = "SEQ_INV_ITEM",
+            sequenceName = "SEQ_INV_ITEM",
+            allocationSize = 1
     )
     @Column(name = "ID")
     private Long id;
