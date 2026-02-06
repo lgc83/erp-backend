@@ -17,7 +17,7 @@ public class Journal {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_seq")
     //👉 ID를 자동으로 만들어 주세요 주로 Oracle, PostgreSQL에서 많이 씀
     @SequenceGenerator(
-            name = "journal_seq", sequenceName = "SEQ_JOURNAL",  allocationSize = 1
+name = "journal_seq", sequenceName = "SEQ_JOURNAL",  allocationSize = 1
     )
     /*
  name : jpa내부에서 부르는 이름
@@ -27,23 +27,27 @@ public class Journal {
     private Long id;
 
     private LocalDate journalDate;
-    /*전표날짜 */
-    @OneToMany(mappedBy = "journal", cascade = CascadeType.ALL)
+/*전표날짜 */
+    //@OneToMany(mappedBy = "journal", cascade = CascadeType.ALL)
 /*@OneToMany 1대 다관계 journal 1개 JournalLine 여러개
 cascade = CascadeType.ALL 부모가 바뀌면 자식도 같이 처리
 Journal은 전표 헤더(머리)
 JournalLine은 전표 상세(몸통)
 * */
+    @OneToMany(mappedBy = "journal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JournalLine> lines = new ArrayList<>();
 
-    @Column(name = "TRADE_NO", nullable = false)
-    private String tradeNo;
+    //@Column(name = "TRADE_NO", nullable = false)
+    //private String tradeNo;
 
-    @Column(name = "TRADE_DATE", nullable = false)
-    private String tradeDate;
+    @Column(name = "JOURNAL_NO", nullable = true, length = 50)
+    private String journalNo;
+
+    /*@Column(name = "TRADE_DATE", nullable = false)
+    private String tradeDate;*/
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+    @JoinColumn(name = "CUSTOMER_ID", nullable = true)
     private Customer customer;
 
     @Column(name = "TOTAL_AMOUNT")
@@ -53,8 +57,8 @@ JournalLine은 전표 상세(몸통)
     private List<JournalLine> lines;*/
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS")
-    private JournalStatus status;
+    @Column(name = "STATUS", nullable = false, length = 20)
+    private JournalStatus status = JournalStatus.DRAFT;
 
 
 
