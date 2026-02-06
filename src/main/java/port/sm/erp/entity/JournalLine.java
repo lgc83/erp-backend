@@ -1,24 +1,17 @@
 package port.sm.erp.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
-/*Journal의 자식(상세) 엔티티입니다.
-전표 1건
-├─ 차변 | 현금 | 1,000,000
-└─ 대변 | 매출 | 1,000,000
-* */
-
-@Entity //DB에 저장되는 객체
-@Table(name = "JOURNAL_LINES")
 @Getter
 @Setter
+@Entity
+@Table(name = "JOURNAL_LINES")
 public class JournalLine {
 
-    @Id //기본키(PK) – 전표 라인 번호
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "journal_line_seq")
     @SequenceGenerator(
             name = "journal_line_seq",
@@ -27,38 +20,31 @@ public class JournalLine {
     )
     private Long id;
 
-    //계정과목과 코드  & 이름
-    @Column(name = "ACCOUNT_CODE", nullable = false, length = 20)
-    private String accountCode; //101. 401
+    @Column(name = "ACCOUNT_CODE", nullable = false, length = 50)
+    private String accountCode;
 
     @Column(name = "ACCOUNT_NAME", length = 100)
-    private String accountName; //현금, 매출
+    private String accountName;
 
-    //차변 DEBIT / 대변 CREDIT - Enum
     @Enumerated(EnumType.STRING)
     @Column(name = "DC_TYPE", nullable = false, length = 10)
     private DcType dcType;
 
-    //금액 전표라인의 금액 정수기반(원단위) 소수점 오류 방지
     @Column(name = "AMOUNT", nullable = false)
     private Long amount;
 
-    /**적요*/
-    @Column(name = "LINE_REMARK", length = 500)
+    @Column(name = "LINE_REMARK", length = 255)
     private String lineRemark;
 
-    @JsonBackReference
+    /** 전표 */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "JOURNAL_ID") //👉 외래키(FK) 컬럼
+    @JoinColumn(name = "JOURNAL_ID")
     private Journal journal;
 
-    //전표와의 관계 (핵심)
+    /** 거래 */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TRADE_ID", nullable = true) //👉 외래키(FK) 컬럼
+    @JoinColumn(name = "TRADE_ID")
     private Trade trade;
 
-
-
-
-
+    public JournalLine() {}
 }

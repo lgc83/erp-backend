@@ -1,7 +1,9 @@
 package port.sm.erp.entity;
 
-import javax.persistence.*;
+
 import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "MEMBERS") // Oracle에서는 MEMBER보다는 복수형 권장
