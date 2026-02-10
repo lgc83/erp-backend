@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*
 import port.sm.erp.dto.CustomerResponse
 import port.sm.erp.entity.Customer
 import port.sm.erp.service.CustomerService
-import java.util.*
 import java.util.function.Function
 import java.util.function.Supplier
 import java.util.stream.Collectors
@@ -22,7 +21,7 @@ class CustomerController {
     val allCustomers: ResponseEntity<MutableList<CustomerResponse?>?>
         // 거래처 목록조회
         get() {
-            val customers: MutableList<Customer?> = customerService.getAllCustomers() // Service에서 처리
+            val customers = customerService!!.getAllCustomers() // Service에서 처리
 
             if (customers.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT)
@@ -39,7 +38,7 @@ class CustomerController {
     // 거래처 상세조회
     @GetMapping("/api/acc/customers/{id}")
     fun getCustomer(@PathVariable id: Long?): ResponseEntity<Customer?> {
-        val customer: Optional<Customer?> = customerService.getCustomerById(id)
+        val customer = customerService!!.getCustomerById(id)
         return customer.map<ResponseEntity<Customer?>?>(Function { body: Customer? -> ResponseEntity.ok(body) })
             .orElseGet(Supplier { ResponseEntity.notFound().build<Customer?>() })
     }
@@ -47,14 +46,14 @@ class CustomerController {
     // 거래처 등록
     @PostMapping("/api/acc/customers")
     fun createCustomer(@RequestBody customer: Customer?): ResponseEntity<Customer?> {
-        val createdCustomer: Customer? = customerService.createCustomer(customer)
+        val createdCustomer = customerService!!.createCustomer(customer)
         return ResponseEntity.status(HttpStatus.CREATED).body<Customer?>(createdCustomer)
     }
 
     // 거래처 수정
     @PutMapping("/api/acc/customers/{id}")
     fun updateCustomer(@PathVariable id: Long?, @RequestBody customer: Customer?): ResponseEntity<Customer?> {
-        val updatedCustomer: Customer? = customerService.updateCustomer(id, customer)
+        val updatedCustomer = customerService!!.updateCustomer(id, customer)
         return if (updatedCustomer != null) ResponseEntity.ok<Customer?>(updatedCustomer) else ResponseEntity.notFound()
             .build<Customer?>()
     }
@@ -62,7 +61,7 @@ class CustomerController {
     // 거래처 삭제
     @DeleteMapping("/api/acc/customers/{id}")
     fun deleteCustomer(@PathVariable id: Long?): ResponseEntity<Void?> {
-        return if (customerService.deleteCustomer(id)) ResponseEntity.noContent()
+        return if (customerService!!.deleteCustomer(id)) ResponseEntity.noContent()
             .build<Void?>() else ResponseEntity.notFound().build<Void?>()
     }
 }
